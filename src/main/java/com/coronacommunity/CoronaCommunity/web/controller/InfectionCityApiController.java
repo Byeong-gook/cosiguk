@@ -54,6 +54,7 @@ public class InfectionCityApiController {
 
         try {
             String apiUrl = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?" +
+                    //application.properties 파일은 저에게 카톡으로 요청해주세요
                     "serviceKey=" + apiService.getStatusApiServiceKey() +
                     "&pageNo=1" +
                     "&numOfRows=10" +
