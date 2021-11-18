@@ -1,6 +1,7 @@
 package com.coronacommunity.CoronaCommunity.service;
 
 
+import com.coronacommunity.CoronaCommunity.dto.ChatListDto;
 import com.coronacommunity.CoronaCommunity.entity.Board;
 import com.coronacommunity.CoronaCommunity.entity.Chat;
 import com.coronacommunity.CoronaCommunity.repository.BoardRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class ChatService {
     }
 
 
-    //해당 게시글 댓글리스트 API
+  /*  //해당 게시글 댓글 전체리스트 API
     public List<Chat> chatListApi(long boardId) {
         int viewValue = 0;
         //게시판을 내림차순으로 정렬해서 리스트형식으로 가져옵니다.
@@ -67,6 +69,22 @@ public class ChatService {
 
         List<Chat> chatList = query.getResultList();
 
+
+        return chatList;
+    }*/
+
+    //해당 게시글 댓글 전체리스트 API
+    public List<ChatListDto> chatListApi(long boardId) {
+        int viewValue = 0; // 댓글 view 컬럼의 값이 0인 댓글만 조회
+
+        String q = "SELECT c.id, c.nickname, c.content, c.created_date AS createdDate, c.modified_date AS modifiedDate," +
+                "c.board_id ,c.recommend, c.deprecate, c.declaration " +
+                "FROM chat c where board_id = :boardAddress and view = :viewValue ORDER BY c.id DESC";
+        Query query = em.createNativeQuery(q, "ChatListDtoMapping");
+        query.setParameter("boardAddress", boardId);
+        query.setParameter("viewValue", viewValue);
+
+        List<ChatListDto> chatList = query.getResultList();
 
         return chatList;
     }

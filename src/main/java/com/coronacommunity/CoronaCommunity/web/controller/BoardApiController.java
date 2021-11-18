@@ -1,5 +1,6 @@
 package com.coronacommunity.CoronaCommunity.web.controller;
 
+import com.coronacommunity.CoronaCommunity.dto.BoardDetailDto;
 import com.coronacommunity.CoronaCommunity.entity.Board;
 import com.coronacommunity.CoronaCommunity.entity.Chat;
 import com.coronacommunity.CoronaCommunity.repository.BoardRepository;
@@ -54,9 +55,12 @@ public class BoardApiController {
         HttpHeaders header = new HttpHeaders();
         header.add("Content-Type", "application/json; charset=UTF-8");
 
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", 0);
         jsonObject.put("message", "success");
+
+
 
         JSONObject result_data = new JSONObject();
 
@@ -126,19 +130,18 @@ public class BoardApiController {
         jsonObject.put("message","success");
 
         JSONObject data;
-        Board boardDetail =  boardService.boardDetail(boardId);
+        BoardDetailDto boardDetailDto = boardService.boardDetail(boardId);
             data = new JSONObject();
-            data.put("id",boardDetail.getId());
-            data.put("nickname",boardDetail.getNickname());
-            data.put("password",boardDetail.getPassword());
-            data.put("title",boardDetail.getTitle());
-            data.put("content",boardDetail.getContent());
-            data.put("hit",boardDetail.getHit());
-            data.put("declaration",boardDetail.getDeclaration());
-            data.put("recommend",boardDetail.getRecommend());
-            data.put("deprecate",boardDetail.getDeprecate());
-            data.put("createDate",boardDetail.getCreatedDate());
-            data.put("modifiedDate",boardDetail.getModifiedDate());
+            data.put("id",boardDetailDto.getId());
+            data.put("nickname",boardDetailDto.getNickname());
+            data.put("title",boardDetailDto.getTitle());
+            data.put("content",boardDetailDto.getContent());
+            data.put("hit",boardDetailDto.getHit());
+            data.put("declaration",boardDetailDto.getDeclaration());
+            data.put("recommend",boardDetailDto.getRecommend());
+            data.put("deprecate",boardDetailDto.getDeprecate());
+            data.put("createDate",boardDetailDto.getCreatedDate());
+            data.put("modifiedDate",boardDetailDto.getModifiedDate());
 
 
 
@@ -172,7 +175,7 @@ public class BoardApiController {
             return new ResponseEntity(jsonObject.toString(), header, HttpStatus.NOT_FOUND);
         }
 
-        Board passCheckBord = boardService.boardDetail(boardId);
+        Board passCheckBord = boardService.boardDetailApi(boardId);
 
         if (password.equals(passCheckBord.getPassword())) {
             boardService.boardDeleteChangeView(boardId);

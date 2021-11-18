@@ -50,9 +50,9 @@ public class AdminApiController {
         jsonObject.put("code", 0);
         jsonObject.put("message", "success");
         JSONObject data = new JSONObject();
-        data.put("ios", "1.0");
+        data.put("ios", "2.0");
         data.put("iosUrl", "http://test.byeonggook.shop/");
-        data.put("android", "1.0");
+        data.put("android", "2.0");
         data.put("androidUrl", "http://test.byeonggook.shop/");
 
 
