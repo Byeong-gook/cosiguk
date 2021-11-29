@@ -1,10 +1,7 @@
 package com.coronacommunity.CoronaCommunity.web.controller;
 
-import com.coronacommunity.CoronaCommunity.domain.InfectionByCity;
-import com.coronacommunity.CoronaCommunity.domain.InfectionStatus;
 import com.coronacommunity.CoronaCommunity.service.ApiService;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;

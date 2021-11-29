@@ -2,9 +2,7 @@ package com.coronacommunity.CoronaCommunity.service;
 
 import com.coronacommunity.CoronaCommunity.entity.*;
 import com.coronacommunity.CoronaCommunity.repository.BoardRepository;
-import com.coronacommunity.CoronaCommunity.repository.ChatRepository;
 import com.coronacommunity.CoronaCommunity.repository.b_IpstoreRepository;
-import com.coronacommunity.CoronaCommunity.repository.c_IpstoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

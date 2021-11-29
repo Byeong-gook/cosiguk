@@ -2,12 +2,7 @@ package com.coronacommunity.CoronaCommunity.service;
 
 import com.coronacommunity.CoronaCommunity.dto.AdminPageBoardListDto;
 import com.coronacommunity.CoronaCommunity.dto.AdminPageChatListDto;
-import com.coronacommunity.CoronaCommunity.dto.BoardListDto;
-import com.coronacommunity.CoronaCommunity.dto.ChatListDto;
 import com.coronacommunity.CoronaCommunity.entity.Admin;
-import com.coronacommunity.CoronaCommunity.entity.Board;
-import com.coronacommunity.CoronaCommunity.entity.Chat;
-import com.coronacommunity.CoronaCommunity.entity.Notice;
 import com.coronacommunity.CoronaCommunity.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 @RequiredArgsConstructor

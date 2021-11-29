@@ -1,6 +1,5 @@
 package com.coronacommunity.CoronaCommunity.message;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

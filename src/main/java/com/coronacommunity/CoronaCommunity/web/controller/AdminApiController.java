@@ -50,9 +50,9 @@ public class AdminApiController {
         jsonObject.put("code", 0);
         jsonObject.put("message", "success");
         JSONObject data = new JSONObject();
-        data.put("ios", "2.0");
+        data.put("ios", "2.1");
         data.put("iosUrl", "http://test.byeonggook.shop/");
-        data.put("android", "2.0");
+        data.put("android", "2.1");
         data.put("androidUrl", "http://test.byeonggook.shop/");
 
 
@@ -78,7 +78,6 @@ public class AdminApiController {
             data.put("NAME", admin.getName());
 
             JSONObject result_data = new JSONObject();
-            /*   org.json.simple.JSONArray result_data = new org.json.simple.JSONArray();*/
             result_data.put("account", data);
 
             jsonObject.put("result_data", result_data);
@@ -233,7 +232,6 @@ public class AdminApiController {
         }
 
         JSONObject result_data = new JSONObject();
-        /*   org.json.simple.JSONArray result_data = new org.json.simple.JSONArray();*/
         result_data.put("account", data);
 
         jsonObject.put("result_data", result_data);
@@ -312,7 +310,6 @@ public class AdminApiController {
 
 
         JSONObject result_data = new JSONObject();
-        /*   org.json.simple.JSONArray result_data = new org.json.simple.JSONArray();*/
         result_data.put("account", data);
 
         jsonObject.put("result_data", result_data);

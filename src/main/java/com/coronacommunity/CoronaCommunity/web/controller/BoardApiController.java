@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.NoSuchElementException;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,6 +48,7 @@ public class BoardApiController {
     private BoardRepository boardRepository;
 
 
+/*
     //게시판 전체 리스트 가져오기
     @GetMapping("/api/board/boardList")
     public ResponseEntity BoardListAPI() {
@@ -71,6 +71,29 @@ public class BoardApiController {
 
         return new ResponseEntity(jsonObject.toString(), header, HttpStatus.OK);
     }
+*/
+
+    @PostMapping("/api/board/boardList")
+    public ResponseEntity boardPagingAPI(Model model, @RequestParam(value = "page", required = false) int page, @RequestParam(value = "size", required = false) int size ){
+
+        HttpHeaders header = new HttpHeaders();
+        header.add("Content-Type", "application/json; charset=UTF-8");
+
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 0);
+        jsonObject.put("message", "success");
+
+        JSONObject result_data = new JSONObject();
+
+        jsonObject.put("result_data", boardService.boardListPagingApi(model, page, size));
+
+
+
+        return new ResponseEntity(jsonObject.toString(), header, HttpStatus.OK);
+    }
+
+
 
     //게시판 등록 API
     @PostMapping("api/board/boardAdd")

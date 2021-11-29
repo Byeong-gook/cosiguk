@@ -8,6 +8,7 @@ import com.coronacommunity.CoronaCommunity.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -47,8 +48,8 @@ public class BoardService {
     }*/
 
 
-    //게시판 전체리스트 API
-    public List<BoardListDto> boardListApi( ) {
+/*    //게시판 전체리스트 API (페이징 기능 추가 전)
+    public List<BoardListDto> boardListApi() {
         int viewValue = 0; // 게시판 view 컬럼의 값이 0인 게시글만 조회
 
         String q = "SELECT b.id, b.title, b.content,b.nickname,b.created_date AS createdDate," +
@@ -60,6 +61,63 @@ public class BoardService {
         List<BoardListDto> boardList = query.getResultList();
 
         return boardList;
+    }*/
+
+    //게시판 전체리스트 API (페이징 기능 추가)
+    public Model boardListPagingApi(Model model , int page, int size) {
+        //page : 보여줄 페이지 , size : 한 페이지당 보여줄 게시글의 수
+
+        //총 게시글의 수를 반환하는 쿼리리
+       Query totalCountQuery = em.createQuery("SELECT COUNT(*) AS totalCount FROM board WHERE view = 0");
+
+        //총 게시글의 수
+        Long totalCount = (Long) totalCountQuery.getSingleResult();
+
+
+        // 총페이지의 수 = 총게시글의수 / 한페이지에 보여줄 개수
+        int totalPage = (int) (totalCount / size);
+
+        if(totalCount % size > 0) {
+            //총게시글의수를 한 페이지에 보여질 개수로 나눠떨어지지않는경우 총페이지의 수를 1 증가시켜준다.
+            totalPage++;
+        }
+
+        //클라이언트에서 요청한 페이지가 총페이지수 보다 많을때 페이지에 마지막페이지번호를 삽입한다.
+        if (totalPage <= page) {
+            page = totalPage;
+            page--;
+        }
+
+        //page 0일때 내림차순으로 최신글부터 0번글에서 5번글이 출력
+        //page 1일때 내림차순으로 최신글부터 6번글에서 10번글이 출력 되도록
+        int number = page * size;
+        int viewValue = 0;
+
+        //page 0이면 0 이 떠야하고 page1이면 5가 page 2이면 5가 page 3이면 10이 4면 총페이지수를 넘어버리니 3페이지가반환
+
+        String q = "SELECT b.id, b.title, b.content, b.nickname, b.created_date AS createdDate, " +
+                "b.modified_date AS modifiedDate, b.review_count," +
+                "b.hit, b.recommend, b.deprecate, b.declaration FROM board b WHERE view = :viewValue ORDER BY b.id DESC LIMIT :number, :size";
+
+        Query query = em.createNativeQuery(q, "BoardListDtoMapping");
+        query.setParameter("viewValue", viewValue);
+        query.setParameter("number", number);
+        query.setParameter("size", size);
+        List<BoardListDto> boardList = query.getResultList();
+
+
+        //총 게시글 수
+        model.addAttribute("totalCount", totalCount);
+        //총 페이지수
+        model.addAttribute("totalPage", totalPage);
+        //클라이언트에서 요청한 페이지번호
+        model.addAttribute("requestPage", page);
+        //출력된 데이터
+        model.addAttribute("data", boardList);
+
+
+
+        return model;
     }
 
 
@@ -151,6 +209,10 @@ public class BoardService {
         findBoard.setView(1);
         boardRepository.save(findBoard);
     }
+
+
+
+
 
 
 }
