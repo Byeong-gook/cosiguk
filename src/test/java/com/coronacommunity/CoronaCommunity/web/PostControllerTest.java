@@ -3,7 +3,6 @@ package com.coronacommunity.CoronaCommunity.web;
 import com.coronacommunity.CoronaCommunity.repository.BoardRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.h2.server.web.WebApp;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;

@@ -1,0 +1,32 @@
+.postContainer{
+    display: flex;
+    flex-direction: column;
+}
+.postHeader{
+    width: 750px;
+    height: 80px;
+    font-weight: bold;
+    font-size: 35px;
+
+}
+.postContents{
+    display: flex;
+    flex-direction: column;
+    width: 750px;
+}
+.postTitle{
+
+}
+.postContents{
+
+}
+.postFooter{
+
+}
+.postNickname{
+    background-color: "white";
+    width: 700px;
+}
+.postNicknameArea{
+    background-color: "white";
+}
