@@ -73,8 +73,6 @@ task installReact(type: Exec) {
 
 
 
-
-
 test {
 	useJUnitPlatform()
 }
