@@ -4,7 +4,6 @@ package com.coronacommunity.CoronaCommunity.web.controller;
 import com.coronacommunity.CoronaCommunity.entity.InfectionCity;
 import com.coronacommunity.CoronaCommunity.service.ApiService;
 import com.coronacommunity.CoronaCommunity.service.InfectionCityService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -100,16 +99,16 @@ public class InfectionCity7DayspiController {
             for(int i =0; i < parse_item.length(); i++) {
                 InfectionCity infectionCity = new InfectionCity();
                 obj = (JSONObject) parse_item.get(i); //해당 item가져오기
-               infectionCity.setGubun((String) obj.get("gubun"));
-               gubun = (String) obj.get("gubun");
-               String dateStr = (String) obj.get("createDt");
-               Date f_date = input.parse(dateStr);
-               infectionCity.setCreatedt(output.format(f_date));
-               OneDay = output.format(f_date);
-               infectionCity.setDeathcnt((Integer) obj.get("deathCnt"));
-               infectionCity.setDefcnt((Integer) obj.get("defCnt"));
+                infectionCity.setGubun((String) obj.get("gubun"));
+                gubun = (String) obj.get("gubun");
+                String dateStr = (String) obj.get("createDt");
+                Date f_date = input.parse(dateStr);
+                infectionCity.setCreatedt(output.format(f_date));
+                OneDay = output.format(f_date);
+                infectionCity.setDeathcnt((Integer) obj.get("deathCnt"));
+                infectionCity.setDefcnt((Integer) obj.get("defCnt"));
 
-               infectionCityService.InfectionCityApiDataAdd(infectionCity, OneDay, gubun);
+                infectionCityService.InfectionCityApiDataAdd(infectionCity, OneDay, gubun);
             }
         }
         catch (Exception e) {
@@ -137,6 +136,4 @@ public class InfectionCity7DayspiController {
 
         return new ResponseEntity(jsonObject.toString(), header, HttpStatus.OK);
     }
-        }
-
-
+}

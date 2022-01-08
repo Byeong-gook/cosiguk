@@ -20,8 +20,8 @@ import javax.persistence.*;
                 columns = {
                         @ColumnResult(name="createDt", type=String.class),
                         @ColumnResult(name="gubun", type=String.class),
-                        @ColumnResult(name="deathcnt", type=Integer.class),
-                        @ColumnResult(name="defcnt", type=Integer.class)
+                        @ColumnResult(name="deathCnt", type=Integer.class),
+                        @ColumnResult(name="defCnt", type=Integer.class)
                 })
 )
 public class InfectionCity {

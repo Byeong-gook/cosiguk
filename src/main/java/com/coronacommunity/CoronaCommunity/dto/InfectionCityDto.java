@@ -6,14 +6,14 @@ import lombok.Data;
 public class InfectionCityDto {
     private String createDt;
     private String gubun;
-    private int deathcnt;
-    private int defcnt;
+    private int deathCnt;
+    private int defCnt;
 
 
-    public InfectionCityDto(String createDt, String gubun, int deathcnt, int defcnt) {
+    public InfectionCityDto(String createDt, String gubun, int deathCnt, int defCnt) {
         this.createDt = createDt;
         this.gubun = gubun;
-        this.deathcnt = deathcnt;
-        this.defcnt = defcnt;
+        this.deathCnt = deathCnt;
+        this.defCnt = defCnt;
     }
 }

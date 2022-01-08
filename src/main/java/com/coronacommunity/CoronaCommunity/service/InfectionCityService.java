@@ -5,7 +5,6 @@ import com.coronacommunity.CoronaCommunity.dto.InfectionCityDto;
 import com.coronacommunity.CoronaCommunity.entity.InfectionCity;
 import com.coronacommunity.CoronaCommunity.repository.InfectionCityRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.One;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
