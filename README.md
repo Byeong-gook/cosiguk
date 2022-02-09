@@ -1,7 +1,9 @@
 # 코로나19 도우미 어플 (가칭)
 이 어플의 목적은 코로나 19 에 대한 정보 (지역별 확진자 , 뉴스 기사 , 근처 진료소 , 접종 현황 ) 
 사용자 간 소통이 가능한 게시판을 만들어 정보 공유를 목표로 만들었습니다.
-
+   
+<video src="https://user-images.githubusercontent.com/46862400/151135430-6dfd9f55-9c1e-4a03-8fe0-c49d48c4dd47.mp4"></video>
+   
 ## 제작된 플랫폼
 > iOS : 김진우 / [iOS](https://github.com/castle6116/COVID-19_HELPER)
 
@@ -147,6 +149,7 @@
 - SideMenuController
     <details markdown="1">
     <summary>접기/펼치기</summary>
+    
        + startUI()
         -   tableView의 dataSource, delegate를 self로 지정 separatorStyle을 지정하여 선을 표시하지 않음.
         
@@ -163,6 +166,7 @@
 - NewsViewController
     <details markdown="1">
     <summary>접기/펼치기</summary>
+    
        + startUI()
         -   tableview_Custom의 delegate , dataSource를 self로 지정 , rowHeight를 120으로 지정 naverNewsRequest 함수를 호출하여 
             값이 정상적으로 반환되면 news 배열에 각 값을 넣고 TableView를 reload하고 hideLoading 함수를 호출
@@ -194,6 +198,7 @@
 - VaccineViewController
     <details markdown="1">
     <summary>접기/펼치기</summary>
+    
        + startUI()
         -   네이버 지도 객체의 delegate, touchDelegate 를 self로 지정 해주고 gps 버튼 활성화 , 줌 컨트롤러 활성화 를 해준 뒤
             VaccineCollection(CollectionView_의 delegate , datasource도 self로 지정 해준다.
@@ -245,66 +250,92 @@
             통신에 실패하거나 문제가 발생한 경우 콘솔에 출력해준다.
         
        + VaccineCenterHttp(complation : ((Center?) -> ())?)
-        -   
+        -   진료소 현황을 요청하는 api
+            parameter로 key와 perPage를 포함해서 전송하며 api로 받은 obj 값을 JSON으로 변경하여 JSONDecoder를 사용해 Center 객체로
+            변환 한 다음 Center 객체를 클로저로 전송한다.
         
        + collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int 
-        - 
+        -   vaccineCenter 객체의 개수를 반환한다.
        
        + collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-        -
+        -   cell 세부 내용 구현 함수
+            centerLocation 변수에 진료소의 lat, lng를 가져오고 Location 변수에 사용자의 위치를 받아와 거리를 계산하여 label을 변경 하여준다.
         
        + getLocationUsagePermission()
-        -
+        -   사용자가 위치권한이 허용안함 으로 되어있는 경우 호출되는 함수.
+            UIAlertController를 활용하여 제작 하였으며 만약 네 를 누른 경우 설정화면으로 옮겨져 위치권한을 수정할 수 있게 합니다.
         
        + locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-        -
+        -   위치가 업데이트가 일어나면 호출되는 함수
+            currentLocation에 locationManger의 location을 삽입하여줍니다.
         
        + distance(from: CLLocationCoordinate2D) -> CLLocationDistance
-        -
+        -   from의 위치 값과 현재 자신의 위치값을 계산하여 반환하는 함수이다.
         
        + isOnValueChange(isOn: Bool)
-        -
+        -   지도와 리스트를 변경하는 버튼을 눌렀을 때 호출되는 함수 이다.
     
     </details>
 - NoticeViewController
     <details markdown="1">
     <summary>접기/펼치기</summary>
+    
+       + startUI()
+        -   tableView의 delegate, dataSource를 self로 설정 NoticeAllRequest() 함수를 호출한다.
+            반환값이 nil이 아니라면 NoticeList_All에 삽입하여 주고 tableView reload를 진행한다. 
+        
        + NoticeAllRequest(complation : ((Notice?) -> ())?)
-        -   
+        -   자체 서버에 저장된 noticeList를 받아오는 api 호출 함수
+            api로 받은 obj 값을 JSON으로 변경하여 JSONDecoder를 사용해 Notice 객체로 변환 한 다음 Notice 객체를 클로저로 전송한다.
         
        + numberOfSections(in tableView: UITableView) -> Int   
-        -   
+        -   NoticeList_All 객체의 개수를 반환한다.
         
        + tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int   
-        -   
+        -   tableView를 클릭하면 section의 수를 늘려 펼쳐지는 형식으로 보여줍니다.
         
        + tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat    
-        -   
+        -   indexPath를 기준 제목 부분이 높이를 60 , 세부 내용 부분을 250으로 설정하여줌.
         
        + tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell   
-        -   
+        -   tableView의 cell 세부 내용을 구현하는 함수 indexPath의 row로 제목부분과 컨텐츠 부분으로 분류하여 구현하였음.
+            제목 부분 : NoticeList_All에 저장 되어 있는 배열 값을 토대로 제목부분을 줄바꿈 규칙을 한글형식으로 지정.
+            컨텐츠 부분 : NoticeList_All에 저장 되어 있는 배열 값을 토대로 title, content을 삽입 하여 cell을 반환. 
         
        + tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)   
-        -   
-        
+        -   cell을 클릭 시 발생하는 이벤트이며 선택된 셀의 구조는 NoticeTableTitleCell로 하였다.
+            선택된 tableView의 Row와 이벤트의 indexPath.row 가 같다면 실행하며 index.row가 0인 경우 NoticeList_All의 open이 true 인 경우(열려있는 경우)
+            open을 false로 변경 선택한 section(펼쳐진)을 indexPath.section을 추가 시켜주고 tableView의 Section을 reload 해준다.
+            false 인 경우(닫혀 있는 경우) open을 true로 변경 하여 주고 indexPath.section을 추가 시켜주고 tableView의 Section을 reload 해준다. 
+            
     </details>
 - HowToUseViewController
     <details markdown="1">
     <summary>접기/펼치기</summary>
+    
        + pageValueDidChanged()
-        -   
+        -   Pager 이벤트를 구현한 함수
+            ScrollBar가 이동된 경우 collectionView의 ViewItem을 옮겨주게끔 만들었음.
         
        + setupCollectionView()
-        -   
+        -   pager Action을 pageValueDidChange() 함수로 추가 해주고, numberOfPages를 imgName의 개수 만큼 반환해준다.
+            currentPage를 0으로 설정하여 첫번째 페이지 부터 나오게 설정 한다. CollectionView의 dataSource , delegate를 self로 변경해준다.
+            collectionViewLayout을 FlowLayout으로 설정 layout의 아이템 사이즈는 view의 bound size 로 width를 설정한다.
+            height의 높이는 height - 220로 설정한다. collectionView의 Layout를 collectionViewLayout로 설정해준다.
         
        + collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int   
-        -   
+        -   imgName 배열 개수로 반환하여준다.
         
        + collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-        -   
+        -   cell을 구현하는 함수
+            indexPath.row를 기준으로 이미지와 문구를 넣어준다 
         
        + scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
-        -   
+        -   스크롤이 멈췄을때 사용자가 보고 있는 화면의 collectionView 좌표를 토대로 index를 확인하는 함수
+            layout에 collectionView의 collectionViewLayout을 설정해주고 cell의 사이즈를 확인하기 위해 itemSize.width + minimumLineSpacing을
+            더하여 측정. estimatedIndex에 contentOffset.x / cellSize 를 하여 현재 사용자가 보고 있는 화면의 인덱스를 계산한다.
+            인덱스를 Int형으로 형변환 하여 소수점을 잘라내어 인덱스 확인하여 현재 화면의 인덱스를 확인하여 targetContentOffset에 indexNumber * cell 크기를 
+            반환하여 준다.
         
     </details>
 - LicenseViewController
@@ -317,8 +348,12 @@
 - GeneralForumViewController
     <details markdown="1">
     <summary>접기/펼치기</summary>
+    
        + StartSetting()
-        -   
+        -   ForumTable의 delegate, dataSource를 self로 설정 ForumTableGet() 함수를 요청하여 반환값이 nil이 아닌 경우
+            self.totalPage에 반환값의 totalPage를 넣고 tableContent를 빈값으로 초기화 하여준다.
+            그 다음 data를 tableContent에 삽입하고 ForumTable을 reload 한 뒤 pageNum을 +1 하여 저장한다
+            WriteButton의 디자인을 설정한다.
         
        + ForumTableGet(complation : ((GeneralForum?) -> ())?)
         -   
@@ -345,6 +380,7 @@
 - DetailForumViewController
     <details markdown="1">
     <summary>접기/펼치기</summary>
+    
        + initRefresh ()   
         -   
         
